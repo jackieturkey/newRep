@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<!--今天公司项目要做一个基于地图的位置展示，在网上找了下，发现高德地图开放api能满足功能，现对其应用做一下简单的记录。-->
+
+<!--1.首先在高德开发平台上注册，简单填写相关信息后，可以获得key，拿到key后可以调用高德地图api的相关接口。-->
+
+<!--2.在调用api的相关页面引入高德api，eg：-->
+
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=0bdc1d33beff5542d086931c9a2c62f6">
+
+
+<!--3.根据初始位置创建地图实例，eg：-->
+
+var position = new AMap.LngLat(x, y);
+//创建地图实例
+mapObj = new AMap.Map("container", {
+view : new AMap.View2D({//创建地图二维视口
+center : position,//创建中心点坐标
+zoom : 10, //设置地图缩放级别
+rotation : 0
+//设置地图旋转角度
+}),
+lang : "zh_cn"//设置地图语言类型，默认：中文简体
+});
+
+//4.在页面上进行初始化，一般在body上eg：
+
+<body onload="initialize('121.476753','31.224349')">
+
+//地图显示位置在div中定义：
+
+<div id="container" style="width:85%; height:500px;margin:0;"></div>
+
+//需要说明的是，显示位置放在table中会有显示不出来的问题，推荐放在div中进行位置改变。
+
+//5.在地图特定位置显示信息，eg：
+
+var info = [];
+info.push("<div><div><img width='67px' height='16px' style=\"float:left;\" src=\"${ctx}/images/main/logo.png \"/></div> ");
+    info.push("<div style=\"padding:0px 0px 0px 4px;\"><b>上海北斗</b>");
+    info.push("x坐标："+x);
+    info.push("y坐标："+y);
+    info.push("地址 : 上海市虹口区欧阳路法兰桥创意园196号</div></div>");
+infoWindow = new AMap.InfoWindow({
+content:info.join("<br/>") //使用默认信息窗体框样式，显示信息内容
+});
+infoWindow.open(mapObj,new AMap.LngLat(x,y));
+
+6.自定义图标点图标
+
+//创建点图标
+var marker = new AMap.Marker({
+icon:"http://webapi.amap.com/images/marker_sprite.png",
+position:new AMap.LngLat(x,y),
+offset:new AMap.Pixel(-26,-13),
+autoRotation:true
+});
+marker.setMap(mapObj); //在地图上添加点
+
+</script>
+</html>
